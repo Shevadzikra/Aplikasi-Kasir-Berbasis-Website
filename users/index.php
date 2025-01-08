@@ -4,6 +4,14 @@ include '../config.php';
 
 session_start();
 
+if (isset($_SESSION['id_user'])) {
+    if ($_SESSION['role_id'] == 2 ) {
+        header("location:../kasir/");
+    }
+} else {
+    header("location:../login/");
+}
+
 $view = $koneksi->query("SELECT u.*, r.nama as nama_role FROM 
 users as u INNER JOIN role as r ON u.role_id=r.id_role");
 

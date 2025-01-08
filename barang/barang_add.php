@@ -3,6 +3,14 @@
 include '../config.php';
 session_start();
 
+if (isset($_SESSION['id_user'])) {
+    if ($_SESSION['role_id'] == 2 ) {
+        header("location:../kasir/");
+    }
+} else {
+    header("location:../login/");
+}
+
 if (isset($_POST['simpan'])) {
     $nama = $_POST['nama'];
     $harga = $_POST['harga'];

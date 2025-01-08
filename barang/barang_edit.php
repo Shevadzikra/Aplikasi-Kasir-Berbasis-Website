@@ -5,6 +5,14 @@ include '../config.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
+    if (isset($_SESSION['id_user'])) {
+        if ($_SESSION['role_id'] == 2 ) {
+            header("location:../kasir/");
+        }
+    } else {
+        header("location:../login/");
+    }
+
     $data = mysqli_query($koneksi, "SELECT * FROM barang WHERE id_barang = '$id'");
     $data = mysqli_fetch_assoc($data);
 }

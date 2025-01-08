@@ -3,11 +3,11 @@
 session_start();
 
 if (isset($_SESSION['id_user'])) {
-    if ($_SESSION['role_id'] == 2 ) {
-        header("location:./kasir/");
+    if ($_SESSION['role_id'] == 1 ) {
+        header("location:../login");
     }
 } else {
-    header("location:./login/");
+    header("location:../kasir/");
 }
 
 ?>
@@ -17,9 +17,10 @@ if (isset($_SESSION['id_user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Aplikasi Kasir</title>
+    <title>Aplikasi Kasir</title>
 </head>
 <body>
-    <a href="./logout/">Logout</a>
+    <h1>Halaman Kasir</h1>
+    <a href="../logout/">Logout</a>
 </body>
 </html>
