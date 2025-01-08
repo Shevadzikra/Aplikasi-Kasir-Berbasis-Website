@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
     
     $_SESSION['success'] = 'Berhasil memperbarui data';
 
-    header("location:./user.php");
+    header("location:./index.php");
 }
 
 ?>
@@ -63,7 +63,7 @@ if (isset($_POST['update'])) {
                 </select>
             </div>
             <input type="submit" name="update" value="Update">
-            <a href="./user.php">Kembali</a>
+            <a href="./index.php">Kembali</a>
         </form>
     </div>
 </body>

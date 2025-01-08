@@ -15,7 +15,7 @@ if (isset($_POST['simpan'])) {
     
     $_SESSION['success'] = 'Berhasil menambahkan data';
 
-    header("location:./user.php");
+    header("location:./index.php");
 }
 
 ?>
@@ -54,7 +54,7 @@ if (isset($_POST['simpan'])) {
                 </select>
             </div>
             <input type="submit" name="simpan" value="Simpan">
-            <a href="./user.php">Kembali</a>
+            <a href="./index.php">Kembali</a>
         </form>
     </div>
 </body>
