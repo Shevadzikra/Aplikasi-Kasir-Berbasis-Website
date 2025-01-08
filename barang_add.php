@@ -8,7 +8,7 @@ if (isset($_POST['simpan'])) {
     $harga = $_POST['harga'];
     $jumlah = $_POST['jumlah'];
 
-    mysqli_query($koneksi, "INSERT INTO barang VALUES ('', '$nama', '$harga', '4jumlah')");
+    mysqli_query($koneksi, "INSERT INTO barang VALUES ('', '$nama', '$harga', '$jumlah')");
     
     $_SESSION['success'] = 'Berhasil menambahkan data';
 
