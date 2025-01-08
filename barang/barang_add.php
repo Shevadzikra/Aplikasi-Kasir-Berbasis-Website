@@ -1,6 +1,6 @@
 <?php 
 
-include 'config.php';
+include '../config.php';
 session_start();
 
 if (isset($_POST['simpan'])) {
@@ -12,7 +12,7 @@ if (isset($_POST['simpan'])) {
     
     $_SESSION['success'] = 'Berhasil menambahkan data';
 
-    header("location:./barang.php");
+    header("location:./index.php");
 }
 
 ?>
@@ -42,7 +42,7 @@ if (isset($_POST['simpan'])) {
                 <input type="number" name="jumlah" class="form-control" placeholder="Jumlah Stok">
             </div>
             <input type="submit" name="simpan" value="Simpan">
-            <a href="./barang.php">Kembali</a>
+            <a href="./index.php">Kembali</a>
         </form>
     </div>
 </body>

@@ -1,6 +1,6 @@
 <?php 
 
-include 'config.php';
+include '../config.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -18,7 +18,7 @@ if (isset($_POST['update'])) {
     mysqli_query($koneksi, "UPDATE barang SET 
     nama='$nama', harga='$harga', jumlah='$jumlah' WHERE id_barang='$id'");
 
-    header("location:./barang.php");
+    header("location:./index.php");
 }
 
 ?>
