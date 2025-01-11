@@ -28,7 +28,7 @@ if (isset($_POST['update'])) {
     $role_id = $_POST['role_id'];
 
     mysqli_query($koneksi, "UPDATE users SET
-    nama='$nama', username='$username', password='$password', role_id='$role_id'");
+    nama='$nama', username='$username', password='$password', role_id='$role_id' WHERE id_user='$id'");
     
     $_SESSION['success'] = 'Berhasil memperbarui data';
 
