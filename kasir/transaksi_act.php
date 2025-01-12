@@ -20,10 +20,12 @@ $tanggal_waktu = date('Y-m-d H:i:s');
 $nomor = rand(111111,999999);
 $total = $_POST['total'];
 $nama = $_SESSION['nama'];
-// $kembali = $bayar - $total;
+$kembali = $bayar - $total;
 
 //insert ke tabel transaksi
-mysqli_query($koneksi, "INSERT INTO transaksi (id_transaksi,tanggal_waktu,nomor,total,nama,bayar,kembali) VALUES (NULL,'$tanggal_waktu','$nomor','$total','$nama','$bayar','$kembali')");
+mysqli_query($koneksi, 
+"INSERT INTO transaksi (id_transaksi,tanggal_waktu,nomor,total,nama,bayar,kembali) 
+VALUES (NULL,'$tanggal_waktu','$nomor','$total','$nama','$bayar','$kembali')");
 
 //mendapatkan id transaksi baru
 $id_transaksi = mysqli_insert_id($koneksi);
@@ -36,7 +38,9 @@ foreach ($_SESSION['cart'] as $key => $value) {
 	$qty = $value['qty'];
 	$tot = $harga*$qty;
 
-	mysqli_query($koneksi,"INSERT INTO transaksi_detail (id_transaksi_detail,id_transaksi,id_barang,harga,qty,total) VALUES (NULL,'$id_transaksi','$id_barang','$harga','$qty','$tot')");
+	mysqli_query($koneksi,
+	"INSERT INTO transaksi_detail (id_transaksi_detail,id_transaksi,id_barang,qty,total,harga) 
+	VALUES (NULL,'$id_transaksi','$id_barang','$qty','$tot','$harga')");
 
 	// $sum += $value['harga']*$value['qty'];
 }

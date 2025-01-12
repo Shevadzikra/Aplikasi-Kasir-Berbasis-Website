@@ -35,7 +35,7 @@ if (isset($_SESSION['cart'])) {
 			<h1>Kasir</h1>
 			<a href="../logout.php">Logout</a> |
 			<a href="./keranjang_reset.php">Reset Keranjang</a> |
-			<a href="riwayat.php">Riwayat Transaksi</a>
+			<a href="./riwayat.php">Riwayat Transaksi</a>
 		</div>
 	</div>
 	<hr>
@@ -47,10 +47,11 @@ if (isset($_SESSION['cart'])) {
                     <select name="id_barang" required>
                         <option>Pilih Barang</option>
                         <?php while ($row = mysqli_fetch_array($barang)) { ?>
-                            <option value="<?=$row['id_barang']?>"><?=$row['nama']?></option>
+                            <option value="<?=$row['id_barang']?>" required><?=$row['nama']?></option>
                             <?php } ?>
-                        </select>
-                        <button type="submit">Tambah</button>
+                    </select>
+					<input type="number" name="qty" required>
+                    <button type="submit">Tambah</button>
 				</div>
 			</form>
 			<br>
@@ -72,7 +73,7 @@ if (isset($_SESSION['cart'])) {
 							<input type="number" name="qty[<?=$key?>]" value="<?=$value['qty']?>" class="form-control">
 						</td>
 						<td align="right"><?=number_format(($value['qty'] * $value['harga']))?></td>
-						<td><a href="./keranjang_hapus.php?id=<?=$value['id']?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></td>
+						<td><a href="./keranjang_delete.php?id=<?=$value['id']?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a></td>
 					</tr>
 				<?php } ?>
 				<?php endif; ?>
@@ -83,10 +84,10 @@ if (isset($_SESSION['cart'])) {
 		<div class="col-md-4">
 			<h3>Total Rp. <?=number_format($sum)?></h3>
 			<form action="./transaksi_act.php" method="POST">
-				<input type="hidden" name="total" value="<?=$sum?>">
+				<input type="text" name="total" value="<?=$sum?>">
 			<div class="form-group">
 				<label>Bayar</label>
-				<input type="number" id="bayar" name="bayar" class="form-control">
+				<input type="number" id="bayar" name="bayar" value="<?=$sum?>" class="form-control">
 			</div>
 			<button type="submit" class="btn btn-primary">Selesai</button>
 			</form>

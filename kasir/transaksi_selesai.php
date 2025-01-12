@@ -15,7 +15,9 @@ $id_trx = $_GET['idtrx'];
 $data = mysqli_query($koneksi, "SELECT * FROM transaksi WHERE id_transaksi='$id_trx'");
 $trx = mysqli_fetch_assoc($data);
 
-$detail = mysqli_query($koneksi, "SELECT transaksi_detail.*, barang.nama FROM `transaksi_detail` INNER JOIN barang ON transaksi_detail.id_barang=barang.id_barang WHERE transaksi_detail.id_transaksi='$id_trx'");
+$detail = mysqli_query($koneksi, "SELECT transaksi_detail.*, barang.nama 
+FROM `transaksi_detail` INNER JOIN barang ON transaksi_detail.id_barang=barang.id_barang 
+WHERE transaksi_detail.id_transaksi='$id_trx'");
 
 ?>
 
