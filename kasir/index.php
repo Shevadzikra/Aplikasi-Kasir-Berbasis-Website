@@ -87,14 +87,14 @@ if (isset($_SESSION['cart'])) {
 				<input type="text" name="total" value="<?=$sum?>">
 			<div class="form-group">
 				<label>Bayar</label>
-				<input type="number" id="bayar" name="bayar" value="<?=$sum?>" class="form-control">
+				<input type="number" id="bayar" name="bayar" class="form-control">
 			</div>
 			<button type="submit" class="btn btn-primary">Selesai</button>
 			</form>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
 	//inisialisasi inputan
 	var bayar = document.getElementById('bayar');
@@ -130,6 +130,6 @@ if (isset($_SESSION['cart'])) {
         return clean;
         // console.log(clean);
     }
-</script>
+</script> -->
 </body>
 </html>
