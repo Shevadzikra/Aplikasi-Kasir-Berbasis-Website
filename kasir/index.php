@@ -43,14 +43,14 @@ if (isset($_SESSION['cart'])) {
         <div class="col-md-8">
             <form method="post" action="./keranjang_act.php">
                 <div class="form-group">
-                    <input type="text" name="kode_barang" class="form-control" placeholder="Masukkan Kode Barang" autofocus>
-                    <select name="id_barang" required>
+					<input type="text" name="kode_barang" class="form-control" placeholder="Masukkan Kode Barang" autofocus>
+                    <!-- <select name="id_barang" required>
                         <option>Pilih Barang</option>
                         <?php while ($row = mysqli_fetch_array($barang)) { ?>
                             <option value="<?=$row['id_barang']?>" required><?=$row['nama']?></option>
                             <?php } ?>
                     </select>
-					<input type="number" name="qty" required>
+					<input type="number" name="qty" required> -->
                     <button type="submit">Tambah</button>
 				</div>
 			</form>
@@ -84,7 +84,7 @@ if (isset($_SESSION['cart'])) {
 		<div class="col-md-4">
 			<h3>Total Rp. <?=number_format($sum)?></h3>
 			<form action="./transaksi_act.php" method="POST">
-				<input type="text" name="total" value="<?=$sum?>">
+				<input type="hidden" name="total" value="<?=$sum?>">
 			<div class="form-group">
 				<label>Bayar</label>
 				<input type="number" id="bayar" name="bayar" class="form-control">

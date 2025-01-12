@@ -13,6 +13,7 @@ if (isset($_SESSION['id_user'])) {
 
 $view = $koneksi->query("SELECT * FROM barang");
 
+
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +41,7 @@ $view = $koneksi->query("SELECT * FROM barang");
         <table class="table table-bordered">
             <tr>
                 <th>ID Barang</th>
+                <th>Kode Barang</th>
                 <th>Nama</th>
                 <th>Harga</th>
                 <th>Jumlah Stok</th>
@@ -54,6 +56,7 @@ $view = $koneksi->query("SELECT * FROM barang");
 
             <tr>
                 <td> <?= $row['id_barang']?> </td>
+                <td> <?= $row['kode_barang']?> </td>
                 <td> <?= $row['nama']?> </td>
                 <td> <?= $row['harga']?> </td>
                 <td> <?= $row['jumlah']?> </td>

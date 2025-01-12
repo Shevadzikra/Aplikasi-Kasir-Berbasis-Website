@@ -1,4 +1,5 @@
-<?php 
+
+<?php
 
 include '../config.php';
 session_start();
@@ -12,46 +13,54 @@ if (isset($_SESSION['id_user'])) {
 }
 
 if (isset($_POST['simpan'])) {
-    $nama = $_POST['nama'];
-    $harga = $_POST['harga'];
-    $jumlah = $_POST['jumlah'];
+	// echo var_dump($_POST);
+	$nama = $_POST['nama'];
+	$kode_barang = $_POST['kode_barang'];
+	$harga = $_POST['harga'];
+	$jumlah = $_POST['jumlah'];
 
-    mysqli_query($koneksi, "INSERT INTO barang VALUES ('', '$nama', '$harga', '$jumlah')");
-    
-    $_SESSION['success'] = 'Berhasil menambahkan data';
 
-    header("location:./index.php");
+	// Menyimpan ke database;
+	mysqli_query($koneksi, "INSERT INTO barang VALUES (NULL,'$nama','$harga','$jumlah','$kode_barang')");
+
+	$_SESSION['success'] = 'Berhasil menambahkan data';
+
+	// mengalihkan halaman ke list barang
+	header("location:./index.php");
+
 }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Tambah Barang</title>
+	<title>Tambah Barang</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="">Nama Barang</label>
-                <input type="text" name="nama" class="form-control" placeholder="Nama Barang">
-            </div>
-            <div class="form-group">
-                <label for="">Harga</label>
-                <input type="number" name="harga" class="form-control" placeholder="Harga">
-            </div>
-            <div class="form-group">
-                <label for="">Jumlah Stok</label>
-                <input type="number" name="jumlah" class="form-control" placeholder="Jumlah Stok">
-            </div>
-            <input type="submit" name="simpan" value="Simpan">
-            <a href="./index.php">Kembali</a>
-        </form>
-    </div>
+<div class="container">
+	<h1>Tambah Barang</h1>
+	<form method="post">
+        <div class="form-group">
+            <label>Nama Barang</label>
+            <input type="text" name="nama" class="form-control" placeholder="Nama barang">
+        </div>
+        <div class="form-group">
+            <label>Kode Barang</label>
+            <input type="text" name="kode_barang" class="form-control" placeholder="Kode barang">
+        </div>
+        <div class="form-group">
+            <label>Harga</label>
+            <input type="number" name="harga" class="form-control" placeholder="Harga Barang">
+        </div>
+        <div class="form-group">
+            <label>Jumlah Stock</label>
+            <input type="number" name="jumlah" class="form-control" placeholder="Jumlah Stock">
+        </div>
+        <input type="submit" name="simpan" value="Simpan" class="btn btn-primary">
+        <a href="./index.php" class="btn btn-warning">Kembali</a>
+	</form>
+</div>
 </body>
 </html>

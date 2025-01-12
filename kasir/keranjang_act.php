@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 include '../config.php';
 session_start();
 
@@ -11,25 +10,29 @@ if (isset($_SESSION['id_user'])) {
     header("location:../kasir/");
 }
 
-if(isset($_POST['id_barang'])) {
+if (isset($_POST['kode_barang'])) {
+    $kode_barang = $_POST['kode_barang'];
+    $qty = 1;
 
-    $id_barang = $_POST['id_barang'];
-    $qty = $_POST['qty'];
+    $data = mysqli_query($koneksi,
+     "SELECT * FROM barang WHERE kode_barang='$kode_barang'");
 
-    $data = mysqli_query($koneksi, "SELECT * FROM barang WHERE id_barang='$id_barang'");
     $item = mysqli_fetch_assoc($data);
+
+    //cek jika di keranjang sudah ada barang yang masuk
+    // $key = array_search($item['id_barang'], array_column($_SESSION['cart'], 'id'));
+
+        // $c_qty = $_SESSION['cart'][$key]['qty'];
+        // $_SESSION['cart'][$key]['qty'] = $c_qty + 1;
 
     $barang = [
         'id' => $item['id_barang'],
         'nama' => $item['nama'],
         'harga' => $item['harga'],
-        'qty' => $qty
+        'qty' => $qty,
     ];
 
     $_SESSION['cart'][] = $barang;
 
-    header("location:./");
-
+    header('location:./index.php');
 }
-
-?>
