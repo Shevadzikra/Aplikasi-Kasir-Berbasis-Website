@@ -33,7 +33,7 @@ if (isset($_SESSION['cart'])) {
 	<div class="row">
 		<div class="col-md-12">
 			<h1>Kasir</h1>
-			<a href="../logout.php">Logout</a> |
+			<a href="../logout/index.php">Logout</a> |
 			<a href="./keranjang_reset.php">Reset Keranjang</a> |
 			<a href="./riwayat.php">Riwayat Transaksi</a>
 		</div>
@@ -41,9 +41,17 @@ if (isset($_SESSION['cart'])) {
 	<hr>
 	<div class="row">
         <div class="col-md-8">
+		<?php if (isset($_SESSION['error']) && $_SESSION['error'] != '') { ?>
+				<div class="alert alert-danger" role="alert">
+					<?=$_SESSION['error']?>
+				</div>
+			<?php }
+			$_SESSION['error'] = '';
+            ?>
             <form method="post" action="./keranjang_act.php">
                 <div class="form-group">
 					<input type="text" name="kode_barang" id="kode_barcode" class="form-control" placeholder="Masukkan Kode Barang" autofocus>
+					<input type="hidden" name="qty" value=1>
                     <!-- <select name="id_barang" required>
                         <option>Pilih Barang</option>
                         <?php while ($row = mysqli_fetch_array($barang)) { ?>

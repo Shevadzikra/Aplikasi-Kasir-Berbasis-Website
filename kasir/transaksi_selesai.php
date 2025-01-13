@@ -27,14 +27,34 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 <head>
 	<title>Kasir Selesai</title>
 	<style type="text/css">
-		body{
-			color: #a7a7a7;
-		}
+		@media print {
+            @page {
+                size: 80mm 100mm; /* Ukuran kertas thermal */
+                margin: 0;
+            }
+
+            body {
+                width: 80mm;
+                font-size: 12px;
+            }
+
+            .struk {
+                text-align: center;
+            }
+
+			#info td, #info th{
+				visibility: visible;
+			}
+
+            button {
+                display: none;
+            }
+        }
 	</style>
 </head>
-<body onload="window.print(); self.close();">
-	<div align="center">
-		<table width="500" border="0" cellpadding="1" cellspacing="0">
+<body>
+	<div align="center" class="struk">
+		<table width="500" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 				<th>Toko Raja Iblis <br>
 					Jl Jawa nomer 69<br>
@@ -53,8 +73,8 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 					<?=$row['nama']?>
 				</td>
 				<td valign="top"><?=$row['qty']?></td>
-				<td  valign="top" align="right"><?=number_format($row['harga'])?></td>
-				<td valign="top" align="right">
+				<td  valign="top" align="left"><?=number_format($row['harga'])?></td>
+				<td valign="top" align="left">
 					<?=number_format($row['total'])?>
 				</td>
 			</tr>
@@ -63,16 +83,16 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 				<td colspan="4"><hr></td>
 			</tr>
 			<tr>
-				<td align="right" colspan="3">Total</td>
-				<td align="right"><?=number_format($trx['total'])?></td>
+				<td align="left" colspan="3">Total</td>
+				<td align="left"><?=number_format($trx['total'])?></td>
 			</tr>
 			<tr>
-				<td align="right" colspan="3">Bayar</td>
-				<td align="right"><?=number_format($trx['bayar'])?></td>
+				<td align="left" colspan="3">Bayar</td>
+				<td align="left"><?=number_format($trx['bayar'])?></td>
 			</tr>
 			<tr>
-				<td align="right" colspan="3">Kembali</td>
-				<td align="right"><?=number_format($trx['kembali'])?></td>
+				<td align="left" colspan="3">Kembali</td>
+				<td align="left"><?=number_format($trx['kembali'])?></td>
 			</tr>
 		</table>
 		<table width="500" border="0" cellpadding="1" cellspacing="0">
@@ -80,6 +100,7 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 			<tr>
 				<th>Terimkasih, Selamat Belanja Kembali</th>
 			</tr>
+			<button onclick="window.print()">Cetak</button>
 		</table>
 	</div>
 </body>

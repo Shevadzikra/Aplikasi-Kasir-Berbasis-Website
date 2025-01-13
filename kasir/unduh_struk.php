@@ -11,14 +11,14 @@ use Dompdf\Dompdf;
 $dompdf = new Dompdf();
 
 ob_start();
-require 'transaksi_selesai_pdf.php';
+require './transaksi_selesai_pdf.php';
 $struk = ob_get_clean();
 ob_end_clean();
 
 $dompdf->loadHtml($struk);
 
 // (Optional) Setup the paper size and orientation
-$dompdf->setPaper('A4', 'potrait');
+$dompdf->setPaper('A4', 'portrait');
 
 // Render the HTML as PDF
 $dompdf->render();

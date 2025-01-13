@@ -19,18 +19,16 @@ if (isset($_POST['kode_barang'])) {
 
     $item = mysqli_fetch_assoc($data);
 
-    //cek jika di keranjang sudah ada barang yang masuk
-    // $key = array_search($item['id_barang'], array_column($_SESSION['cart'], 'id'));
-
-        // $c_qty = $_SESSION['cart'][$key]['qty'];
-        // $_SESSION['cart'][$key]['qty'] = $c_qty + 1;
-
     $barang = [
         'id' => $item['id_barang'],
         'nama' => $item['nama'],
         'harga' => $item['harga'],
+        'jumlah' => $item['jumlah'],
         'qty' => $qty,
     ];
+
+    $stok_akhir = $item['jumlah'] - $qty;
+    mysqli_query($koneksi, "UPDATE barang SET jumlah='$stok_akhir' WHERE id_barang='$id_barang'");
 
     $_SESSION['cart'][] = $barang;
 

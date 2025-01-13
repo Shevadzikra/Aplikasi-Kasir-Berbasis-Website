@@ -1,13 +1,7 @@
 <?php
 include '../config.php';
 
-if (isset($_SESSION['id_user'])) {
-    if ($_SESSION['role_id'] == 1 ) {
-        header("location:../login");
-    }
-} else {
-    header("location:./kasir/");
-}
+session_start();
 
 $data = mysqli_query($koneksi,"SELECT * FROM transaksi WHERE id_transaksi='$id_trx'");
 $trx = mysqli_fetch_assoc($data);
@@ -24,15 +18,15 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 <html>
 <head>
 	<title>Kasir Selesai</title>
-	<style type="text/css">
-		@media print {
+    <style>
+        @media print {
             @page {
-                size: 80mm 100mm; /* Ukuran kertas thermal */
+                size: 58mm 100mm; /* Ukuran kertas thermal */
                 margin: 0;
             }
 
             body {
-                width: 80mm;
+                width: 58mm;
                 font-size: 12px;
             }
 
@@ -40,20 +34,15 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
                 text-align: center;
             }
 
-			#info td, #info th, #info tr {
-				visibility: visible;
-				display: table-row;
-			}
-
             button {
-                display: none;
+                opacity: 0;
             }
         }
-	</style>
+    </style>
 </head>
 <body>
-	<div align="center" class="struk">
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<div align="center">
+		<table width="100%" border="0" cellpadding="1" cellspacing="0">
 			<tr align="center">
 				<th>Toko Raja Iblis<br>
 					Jl Jawa nomer 69<br>
@@ -65,38 +54,38 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 			</tr>
 			<tr><td><hr></td></tr>
 		</table>
-		<table width="100%" border="0" cellpadding="3" cellspacing="0" id="info">
+		<table width="100%" border="0" cellpadding="3" cellspacing="0">
 			<?php while($row = mysqli_fetch_array($detail)){ ?>
 			<tr>
 				<td><?=$row['nama']?></td>
 				<td><?=$row['qty']?></td>
-				<td align="left"><?=number_format($row['harga'])?></td>
-				<td align="left"><?=number_format($row['total'])?></td>
+				<td align="right"><?=number_format($row['harga'])?></td>
+				<td align="right"><?=number_format($row['total'])?></td>
 			</tr>
 			<?php } ?>
 			<tr>
 				<td colspan="4"><hr></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="3">Total</td>
-				<td align="left"><?=number_format($trx['total'])?></td>
+				<td align="right" colspan="3">Total</td>
+				<td align="right"><?=number_format($trx['total'])?></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="3">Bayar</td>
-				<td align="left"><?=number_format($trx['bayar'])?></td>
+				<td align="right" colspan="3">Bayar</td>
+				<td align="right"><?=number_format($trx['bayar'])?></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="3">Kembali</td>
-				<td align="left"><?=number_format($trx['kembali'])?></td>
+				<td align="right" colspan="3">Kembali</td>
+				<td align="right"><?=number_format($trx['kembali'])?></td>
 			</tr>
 		</table>
 		<table width="100%" border="0" cellpadding="1" cellspacing="0">
 			<tr><td><hr></td></tr>
 			<tr align="center">
 				<th>Terimkasih, Selamat Belanja Kembali</th>
-				<button onclick="window.print()">Cetak</button>
 			</tr>
 		</table>
+        <button onclick="window.print()">Cetak</button>
 	</div>
 </body>
 </html>
