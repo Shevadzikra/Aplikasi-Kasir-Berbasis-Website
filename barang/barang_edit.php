@@ -46,28 +46,30 @@ if (isset($_POST['update'])) {
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-	<h1>Edit Barang</h1>
-	<form method="post">
-        <div class="form-group">
-            <label>Nama Barang</label>
-            <input type="text" name="nama" class="form-control" placeholder="Nama barang" value="<?=$data['nama']?>">
-        </div>
-        <div class="form-group">
-            <label>Kode Barang</label>
-            <input type="text" name="kode_barang" class="form-control" placeholder="Kode barang" value="<?=$data['kode_barang']?>">
-        </div>
-        <div class="form-group">
-            <label>Harga</label>
-            <input type="number" name="harga" class="form-control" placeholder="Harga Barang" value="<?=$data['harga']?>">
-        </div>
-        <div class="form-group">
-            <label>Jumlah Stock</label>
-            <input type="number" name="jumlah" class="form-control" placeholder="Jumlah Stock" value="<?=$data['jumlah']?>">
-        </div>
-        <input type="submit" name="update" value="Perbaruhi" class="btn btn-primary">
-        <a href="./index.php" class="btn btn-warning">Kembali</a>
-	</form>
-</div>
+    <div class="container mt-5">
+        <h1 class="mb-4">Edit Barang</h1>
+        <form method="post">
+            <div class="form-group mb-3">
+                <label for="nama">Nama Barang</label>
+                <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama barang" value="<?=$data['nama']?>">
+            </div>
+            <div class="form-group mb-3">
+                <label for="kode_barang">Kode Barang</label>
+                <input type="text" class="form-control" id="kode_barang" name="kode_barang" placeholder="Kode barang" value="<?=$data['kode_barang']?>">
+            </div>
+            <div class="form-group mb-3">
+                <label for="harga">Harga</label>
+                <input type="number" class="form-control" id="harga" name="harga" placeholder="Harga Barang" value="<?=$data['harga']?>">
+            </div>
+            <div class="form-group mb-3">
+                <label for="jumlah">Jumlah Stock</label>
+                <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah Stock" value="<?=$data['jumlah']?>">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary" name="update">Perbaruhi</button>
+                <a href="./index.php" class="btn btn-secondary">Kembali</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

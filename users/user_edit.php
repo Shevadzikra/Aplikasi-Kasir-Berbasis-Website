@@ -46,32 +46,34 @@ if (isset($_POST['update'])) {
     <title>Tambah Users</title>
 </head>
 <body>
-    <div class="container">
-
+    <div class="container mt-5">
+        <h2 class="mb-4">Tambah Users</h2>
         <form action="" method="post">
-            <div class="form-group">
-                <label for="">Nama</label>
-                <input type="text" name="nama" class="form-control" placeholder="Nama">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
             </div>
-            <div class="form-group">
-                <label for="">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Username">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
             </div>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             </div>
-            <div class="form-group">
-                <label for="">Role</label>
-                <select name="role_id" class="form-control">
-                    <option>Pilih Role Akses</option>
-                    <?php while ($row = mysqli_fetch_array($role)) {?>
+            <div class="mb-3">
+                <label for="role_id" class="form-label">Role</label>
+                <select class="form-select" id="role_id" name="role_id">
+                    <option selected>Pilih Role Akses</option>
+                    <?php while ($row = mysqli_fetch_array($role)) { ?>
                         <option value="<?=$row['id_role']?>"><?=$row['nama']?></option>
-                    <?php }?>
+                    <?php } ?>
                 </select>
             </div>
-            <input type="submit" name="update" value="Update">
-            <a href="./index.php">Kembali</a>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary" name="update">Update</button>
+                <a href="./index.php" class="btn btn-secondary">Kembali</a>
+            </div>
         </form>
     </div>
 </body>
