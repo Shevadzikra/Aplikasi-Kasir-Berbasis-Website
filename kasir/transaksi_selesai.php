@@ -36,9 +36,9 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 	<div align="center">
 		<table width="500" border="0" cellpadding="1" cellspacing="0">
 			<tr>
-				<th>Toko ADI <br>
-					Jl Rokan Kiri 28 Bowongan Arjowinangun <br>
-				Pacitan, Jawa Timur, 60822</th>
+				<th>Toko Raja Iblis <br>
+					Jl Jawa nomer 69<br>
+				</th>
 			</tr>
 			<tr align="center"><td><hr></td></tr>
 			<tr>
@@ -79,12 +79,6 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 			<tr><td><hr></td></tr>
 			<tr>
 				<th>Terimkasih, Selamat Belanja Kembali</th>
-			</tr>
-			<tr>
-				<th>===== Layanan Konsumen ====</th>
-			</tr>
-			<tr>
-				<th>SMS/CALL 1234567890 </th>
 			</tr>
 		</table>
 	</div>
