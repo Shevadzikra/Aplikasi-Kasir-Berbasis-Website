@@ -11,7 +11,7 @@ if (isset($_SESSION['id_user'])) {
     header("location:./kasir/");
 }
 
-$view = $koneksi->query('SELECT * FROM transaksi');
+$view = $koneksi->query('SELECT * FROM transaksi ORDER BY tanggal_waktu DESC');
 // return var_dump($view);
 
 ?>
@@ -37,7 +37,7 @@ $view = $koneksi->query('SELECT * FROM transaksi');
     ?>
 
     <h1>Riwayat Transaksi</h1>
-    <a href="/">Kembali</a>
+    <a href="./">Kembali</a>
 	<table class="table table-bordered">
 		<tr>
 			<th>#Nomor</th>
@@ -56,7 +56,7 @@ $view = $koneksi->query('SELECT * FROM transaksi');
 			<td><?=$row['total']?></td>
 			<td><?=$row['nama']?></td>
 			<td>
-                <a href="./unduh_struk.php?idtrx=<?=$row['id_transaksi']?>" class="btn btn-primary">Lihat</a>
+                <a href="./unduh_struk.php?idtrx=<?=$row['id_transaksi']?>" class="btn btn-primary">Cetak</a>
 			</td>
 		</tr>
 

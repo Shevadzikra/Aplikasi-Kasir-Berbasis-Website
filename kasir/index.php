@@ -51,7 +51,15 @@ if (isset($_SESSION['cart'])) {
             <?php }
             $_SESSION['error'] = '';
             ?>
-            <form method="post" action="./keranjang_act.php">
+                    <?php if (isset($_SESSION['success']) && $_SESSION['success'] != '') { ?>
+            <div class="alert alert-success">
+                Berhasil Menambahkan Data!
+            </div>
+        <?php 
+            }
+            $_SESSION['success'] = '';
+        ?>
+            <form method="post" action="./keranjang_act3.php">
                 <div class="form-group">
                     <label for="kode_barcode">Masukkan Kode Barang</label>
                     <input type="text" name="kode_barang" id="kode_barcode" class="form-control" placeholder="Masukkan Kode Barang" autofocus>
@@ -98,10 +106,12 @@ if (isset($_SESSION['cart'])) {
         <div class="col-md-6">
             <h3>Total Rp. <?=number_format($sum)?></h3>
             <form action="./transaksi_act.php" method="POST">
-                <input type="hidden" name="total" value="<?=$sum?>">
+                <input type="hidden" id="total" name="total" value="<?=$sum?>">
                 <div class="form-group">
                     <label for="bayar">Bayar</label>
-                    <input type="number" id="bayar" name="bayar" class="form-control" required>
+                    <input type="number" id="bayar" name="bayar" class="form-control" required oninput="hitungKembalian()">
+                    <label for="kembali">Kembali</label>
+                    <input type="number" id="kembali" name="kembali" class="form-control" placeholder="<?=$sum?>" readonly>
                 </div>
                 <button type="submit" class="btn btn-success">Selesai</button>
             </form>
@@ -111,6 +121,13 @@ if (isset($_SESSION['cart'])) {
 
 <script type="text/javascript">
     document.getElementById('kode_barang').focus();
+
+    function hitungKembalian() {
+        var total = parseInt(document.getElementById('total').value) || 0;
+        var bayar = parseInt(document.getElementById('bayar').value) || 0;
+        var kembali = bayar - total;
+        document.getElementById('kembali').value = kembali >= 0 ? kembali : 0;
+    }
 </script>
 </body>
 </html>

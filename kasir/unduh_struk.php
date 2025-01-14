@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../library/dompdf/autoload.inc.php';
 
 $id_trx = $_GET['idtrx'];

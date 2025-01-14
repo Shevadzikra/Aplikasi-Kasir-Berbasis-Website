@@ -1,76 +1,78 @@
-<?php 
+\keranjang_act.php
+    <?php
+    session_start();
 
-include '../config.php';
-session_start();
+    include 'config.php';
+    include "authcheckkasir.php";
 
-if (isset($_SESSION['id_user'])) {
-    if ($_SESSION['role_id'] == 1 ) {
-        header("location:../login");
+    if (isset($_POST['id_barang']) && isset($_POST['qty'])) {
+        $id_barang = $_POST['id_barang'];
+        $qty = $_POST['qty'];
+
+        // Validasi input jumlah pesanan
+        if ($qty <= 0) {
+            $_SESSION['error'] = "Jumlah pesanan harus lebih dari 0.";
+            header('Location: kasir.php');
+            exit();
+        }
+
+        // Mengambil data barang berdasarkan ID
+        $data = mysqli_query($dbconnect, "SELECT * FROM barang WHERE id_barang='$id_barang'");
+        
+        if ($data && mysqli_num_rows($data) > 0) {
+            $b = mysqli_fetch_assoc($data);
+
+            // Mengecek apakah stok mencukupi
+            if ($qty > $b['jumlah']) {
+                $_SESSION['error'] = "Stok tidak mencukupi! Stok tersedia: " . $b['jumlah'];
+                header('Location: kasir.php');
+                exit();
+            }
+
+            // Menambahkan barang ke dalam cart
+            $barang_baru = [
+                'id' => $b['id_barang'],
+                'nama' => $b['nama'],
+                'harga' => $b['harga'],
+                'qty' => $qty
+            ];
+
+            // Periksa apakah barang sudah ada di keranjang
+            $item_found = false;
+            if (isset($_SESSION['cart'])) {
+                foreach ($_SESSION['cart'] as &$item) {
+                    if ($item['id'] == $id_barang) {
+                        $item['qty'] += $qty;
+                        $item_found = true;
+                        break;
+                    }
+                }
+            } else {
+                $_SESSION['cart'] = [];
+            }
+
+            // Jika barang belum ada di keranjang, tambahkan sebagai barang baru
+            if (!$item_found) {
+                $_SESSION['cart'][] = $barang_baru;
+            }
+
+            // Mengurangi stok barang di database
+            $stok_akhir = $b['jumlah'] - $qty;
+            mysqli_query($dbconnect, "UPDATE barang SET jumlah='$stok_akhir' WHERE id_barang='$id_barang'");
+
+            // Pesan sukses
+            $_SESSION['success'] = "Barang berhasil ditambahkan ke keranjang.";
+            header('Location: kasir.php');
+            exit();
+        } else {
+            // Jika barang tidak ditemukan, tampilkan pesan error
+            $_SESSION['error'] = "Barang tidak ditemukan.";
+            header('Location: kasir.php');
+            exit();
+        }
+    } else {
+        $_SESSION['error'] = "Harap pilih barang dan masukkan jumlah.";
+        header('Location: kasir.php');
+        exit();
     }
-} else {
-    header("location:./kasir/");
-}
-
-$barang = mysqli_query($koneksi, "SELECT * FROM barang");
-
-$sum = 0;
-if (isset($_SESSION['cart'])) {
-    foreach ($_SESSION['cart'] as $key => $value) {
-        $sum += $value['harga'] * $value['qty'];
-    }
-}
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kasir</title>
-</head>
-<body>
-    <h1>Halaman Kasir</h1>
-    <a href="../logout/">Logout</a>
-    <div class="container">
-        <div>
-            <form action="./keranjang_act.php" method="post">
-                <div>
-                    <select name="id_barang" required>
-                        <option>Pilih Barang</option>
-                        <?php while ($row = mysqli_fetch_array($barang)) { ?>
-                            <option value="<?=$row['id_barang']?>"><?=$row['nama']?></option>
-                        <?php } ?>
-                    </select>
-                    <span>
-                        <input type="number" name="qty" placeholder="Jumlah" required>
-                        <button type="submit">Tambah</button>
-                        <button><a href="./keranjang_reset.php">Reset Keranjang</a></button>
-                    </span>
-                </div>
-            </form>
-            <table border="1">
-                <tr>
-                    <th>Nama</th>
-                    <th>Harga</th>
-                    <th>Qty</th>
-                    <th>Sub Total</th>
-                    <th>Aksi</th>
-                </tr>
-                <?php foreach ($_SESSION['cart'] as $key => $value) { ?>
-                <tr>
-                    <td><?=$value['nama']?></td>
-                    <td align="right">Rp<?=number_format($value['harga'])?></td>
-                    <td align="center"><?=$value['qty']?></td>
-                    <td align="right">Rp<?=number_format($value['qty'] * $value['harga'])?></td>
-                    <td><a href="./keranjang_delete.php?id=<?=$value['id']?>">Hapus</a></td>
-                </tr>
-                <?php } ?>
-            </table>
-        </div>
-        <div>
-            <h3>Total: Rp<?=number_format($sum)?> </h3>
-        </div>
-    </div>
-</body>
-</html>
+    ?>

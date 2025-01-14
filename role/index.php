@@ -22,45 +22,43 @@ $view = $koneksi->query("SELECT * FROM role");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Role</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
-    <body>
-        <div class="container">
-
+<body>
+    <div class="container">
         <?php if (isset($_SESSION['success']) && $_SESSION['success'] != '') { ?>
-            <div>
-                <h3>Berhasil Menambahkan Data!</h3>
+            <div class="alert alert-success" role="alert">
+                Berhasil Menambahkan Data!
             </div>
         <?php 
             }
             $_SESSION['success'] = '';
         ?>
 
-        <h1>List Role</h1>
-        <a href="./role_add.php">Tambah Role</a>
-            <table border="1">
+        <h1 class="mt-4">List Role</h1>
+        <a href="./role_add.php" class="btn btn-primary mb-3">Tambah Role</a>
+        <table class="table table-bordered">
+            <thead>
                 <tr>
                     <th>ID Role</th>
                     <th>Nama</th>
                     <th>Aksi</th>
                 </tr>
+            </thead>
+            <tbody>
                 <?php 
-                
-                while ($row = $view->fetch_array()) { 
-                    // looping data barang menggunakan while kedalam bentuk array yang
-                    // dimasukkan kedalam variable $row
-                    ?>
-
+                while ($row = $view->fetch_array()) { ?>
                 <tr>
-                    <td> <?= $row['id_role']?> </td>
-                    <td> <?= $row['nama']?> </td>
+                    <td><?= $row['id_role'] ?></td>
+                    <td><?= $row['nama'] ?></td>
                     <td>
-                        <a href="./role_edit.php?id=<?=$row['id_role']?>">Edit</a> |
-                        <a href="./role_delete.php?id=<?=$row['id_role']?>">Hapus</a>
+                        <a href="./role_edit.php?id=<?= $row['id_role'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="./role_delete.php?id=<?= $row['id_role'] ?>" class="btn btn-danger btn-sm">Hapus</a>
                     </td>
                 </tr>
-                <?php 
-                } ?>
-            </table>
-        </div>
-    </body>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>
