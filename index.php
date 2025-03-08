@@ -35,6 +35,7 @@ if (isset($_SESSION['id_user'])) {
                 <div class="panel-body">
                     <p>Pengelolaan barang, peran, dan pengguna aplikasi kasir.</p>
                     <a href="./barang/" class="btn btn-success btn-lg btn-block">Halaman Barang</a>
+                    <a href="./diskon_barang/" class="btn btn-primary btn-lg btn-block">Halaman Diskon Barang</a>
                     <a href="./role/" class="btn btn-info btn-lg btn-block">Halaman Role</a>
                     <a href="./users/" class="btn btn-warning btn-lg btn-block">Halaman Users</a>
                 </div>
