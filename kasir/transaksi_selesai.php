@@ -19,6 +19,17 @@ $detail = mysqli_query($koneksi, "SELECT transaksi_detail.*, barang.nama
 FROM `transaksi_detail` INNER JOIN barang ON transaksi_detail.id_barang=barang.id_barang 
 WHERE transaksi_detail.id_transaksi='$id_trx'");
 
+// Hitung total diskon, netto, dan jumlah barang yang dipesan
+$total_diskon = 0;
+$total_netto = 0;
+$total_jumlah_barang = 0; // Variabel untuk total jumlah barang
+while ($row = mysqli_fetch_assoc($detail)) {
+    $total_diskon += $row['diskon'];
+    $total_netto += $row['netto'];
+    $total_jumlah_barang += $row['qty']; // Tambahkan qty ke total jumlah barang
+}
+// Reset pointer result set
+mysqli_data_seek($detail, 0);
 ?>
 
 <!DOCTYPE html>
@@ -26,34 +37,18 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 <head>
     <title>Kasir Selesai</title>
     <style>
-    body {
-            color: #a7a7a7;
+        body {
             font-family: Arial, sans-serif;
+            border: 1px solid black;
             margin: 0;
-            padding: 0 0 0 3mm; /* Padding: atas 5mm, kanan 0, bawah 0, kiri 10mm */
-            width: 70mm; /* Lebar tetap */
+            padding: 0 1mm 0 1mm;
+            width: 70mm; /* Lebar struk */
             font-size: 12px;
             color: #333;
         }
 
-        #cetakButton {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-        }
-        #cetakButton:hover {
-            background-color: #0056b3;
-        }
-        
         @page {
-            size: 70mm auto; /* Tinggi auto */
+            size: 70mm auto; /* Ukuran kertas */
             margin: 0;
         }
 
@@ -63,17 +58,18 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
             }
         }
 
-        .content {
+        .struk {
             text-align: center;
         }
 
-        .content h1 {
-            font-size: 14px;
+        .struk h2 {
+            font-size: 16px;
             margin: 5px 0;
         }
 
-        .content p {
+        .struk p {
             margin: 3px 0;
+            font-size: 12px;
         }
 
         table {
@@ -84,65 +80,102 @@ WHERE transaksi_detail.id_transaksi='$id_trx'");
 
         table td {
             font-size: 12px;
-            text-align: left;
+            padding: 3px 0;
         }
 
         table td:last-child {
             text-align: right;
         }
+
+        hr {
+            border: 0;
+            border-top: 1px solid black;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
-    <div align="center" class="struk">
-        <table width="500" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-                <th>Toko Raja Iblis <br>
-                    Jl Jawa nomer 69<br>
-                </th>
-            </tr>
-            <tr align="center"><td><hr></td></tr>
-            <tr>
-                <td>#<?=$trx['nomor']?> | <?=date('d-m-Y H:i:s', strtotime($trx['tanggal_waktu']))?> <?=$trx['nama']?></td>
-            </tr>
-            <tr><td><hr></td></tr>
-        </table>
-        <table width="500" border="0" cellpadding="3" cellspacing="0">
+    <div class="struk">
+        <!-- Header Struk -->
+        <h2>Senyum Media</h2>
+        <p>Jl Kalimantan No 7 Jember</p>
+        <p>Telp WA 0331-32 : 333 / 0811 356 0100</p>
+        <p>CV. SENYUMINDO MEDIATAMA</p>
+        <p>NPWP : 01.618.135.1-651.000</p>
+        <hr>
+
+        <!-- Informasi Transaksi -->
+        <p>CUST UMUM</p>
+        <hr>
+        <p>#<?= $trx['nomor'] ?> | <?= date('d-m-Y H:i:s', strtotime($trx['tanggal_waktu'])) ?> Kasir: <?= $trx['nama'] ?></p>
+        <hr>
+
+        <!-- Detail Barang -->
+        <table border="1">
             <?php while ($row = mysqli_fetch_array($detail)) { ?>
-            <tr>
-                <td valign="top"><?=$row['nama']?></td>
-                <td valign="top"><?=$row['qty']?></td>
-                <td valign="top" align="left"><?=number_format($row['harga'])?></td>
-                <td valign="top" align="left"><?=number_format($row['total'])?></td>
-            </tr>
+                <tr>
+                    <td style="text-align: left;"><?= $row['id_barang'] ?></td>
+                    <td style="text-align: left;"><?= $row['nama'] ?></td>
+                </tr>
+                <tr>
+                    <td><?= $row['qty'] ?> PCS x</td>
+                    <td><?= number_format($row['harga']) ?></td>
+                    <td><?= number_format($row['total']) ?></td>
+                </tr>
             <?php } ?>
-            <tr><td colspan="4"><hr></td></tr>
+            <tr><td colspan="3"><hr></td></tr>
             <tr>
-                <td align="left" colspan="3">Total</td>
-                <td align="left"><?=number_format($trx['total'])?></td>
+                <td class="total_jumlah_pesanan"><?= $total_jumlah_barang ?></td>
+                <td style="text-align: left;" colspan="1">Total</td>
+                <td><?= number_format($trx['total']) ?></td>
             </tr>
             <tr>
-                <td align="left" colspan="3">Bayar</td>
-                <td align="left"><?=number_format($trx['bayar'])?></td>
+                <td></td>
+                <td style="text-align: left;" colspan="1">Diskon</td>
+                <td><?= number_format($total_diskon) ?></td>
             </tr>
             <tr>
-                <td align="left" colspan="3">Kembali</td>
-                <td align="left"><?=number_format($trx['kembali'])?></td>
+                <td></td>
+                <td style="text-align: left;" colspan="1">Netto</td>
+                <td><?= number_format($total_netto) ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: left;" colspan="1">Bayar</td>
+                <td><?= number_format($trx['bayar']) ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: left;" colspan="1">Donasi</td>
+                <td><?= number_format($trx['donasi']) ?></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: left;" colspan="1">Kembali</td>
+                <td><?= number_format($trx['kembali']) ?></td>
             </tr>
         </table>
-        <table width="500" border="0" cellpadding="1" cellspacing="0">
-            <tr><td><hr></td></tr>
-            <tr>
-                <th>Terimakasih, Selamat Belanja Kembali</th>
-            </tr>
-        </table>
+
+        <!-- Footer Struk -->
+        <hr>
+        <div style="text-align: left; border: 1px solid black;">
+            <p style="font-size: 10px;">Barang yang sudah dibeli tidak bisa</p>
+            <p style="font-size: 10px;">ditukarkan/dikembalikan. Kecuali ada perjanjian lebih</p>
+            <p style="font-size: 10px;">dahulu</p>
+        </div>
+        <div style="text-align: left; border: 1px solid black; margin-top: 3px; font-weight: bold;">
+            <p style="font-size: 10px;">Komplin / Keluhan Pelanggan:</p>
+            <p style="font-size: 10px;">Whatsapp: 08113560100</p>
+            <p style="font-size: 10px;">(Foto Struk+Barang)</p>
+            <p style="font-size: 10px;">Instagram / Tiktok: senyummedia</p>
+        </div>
+        <hr>
     </div>
-    <div align="center">
-        <button id="cetakButton" onclick="window.print()">Cetak</button>
-    </div>
-	<script>
-		document.getElementById('cetakButton').addEventListener('click', function() {
+
+    <script>
+        document.getElementById('cetakButton').addEventListener('click', function() {
             console.log('Tombol Cetak diklik. Memulai proses pencetakan.');
         });
-	</script>
+    </script>
 </body>
 </html>

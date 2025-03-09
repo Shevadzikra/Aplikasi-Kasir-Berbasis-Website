@@ -39,7 +39,7 @@ mysqli_data_seek($detail, 0);
     <style>
         body {
             font-family: Arial, sans-serif;
-            /* border: 1px solid black; */
+            border: 1px solid black;
             margin: 0;
             padding: 0 1mm 0 1mm;
             width: 70mm; /* Lebar struk */
@@ -111,47 +111,55 @@ mysqli_data_seek($detail, 0);
         <hr>
 
         <!-- Detail Barang -->
-        <table border="0">
+        <table border="1">
             <?php while ($row = mysqli_fetch_array($detail)) { ?>
                 <tr>
                     <td style="text-align: left;"><?= $row['id_barang'] ?></td>
                     <td style="text-align: left;"><?= $row['nama'] ?></td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;"><?= $row['qty'] ?> PCS x</td>
-                    <td style="text-align: left;"><?= number_format($row['harga']) ?></td>
+                    <td><?= $row['qty'] ?> PCS x</td>
+                    <td><?= number_format($row['harga']) ?></td>
                     <td><?= number_format($row['total']) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Diskon</td>
+                    <td><?= number_format($row['diskon']) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Netto</td>
+                    <td><?= number_format($row['netto']) ?></td>
                 </tr>
             <?php } ?>
             <tr><td colspan="3"><hr></td></tr>
             <tr>
-                <td style="text-align: left;" class="total_jumlah_pesanan"><?= $total_jumlah_barang ?></td>
-                <td style="text-align: left;" colspan="1">Total</td>
+                <td class="total_jumlah_pesanan"><?= $total_jumlah_barang ?></td>
+                <td colspan="1">Total</td>
                 <td><?= number_format($trx['total']) ?></td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;" colspan="1">Diskon</td>
+                <td colspan="1">Total Diskon</td>
                 <td><?= number_format($total_diskon) ?></td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;" colspan="1">Netto</td>
+                <td colspan="1">Total Netto</td>
                 <td><?= number_format($total_netto) ?></td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;" colspan="1">Bayar</td>
+                <td colspan="1">Bayar</td>
                 <td><?= number_format($trx['bayar']) ?></td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;" colspan="1">Donasi</td>
+                <td colspan="1">Donasi</td>
                 <td><?= number_format($trx['donasi']) ?></td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;" colspan="1">Kembali</td>
+                <td colspan="1">Kembali</td>
                 <td><?= number_format($trx['kembali']) ?></td>
             </tr>
         </table>
@@ -163,7 +171,7 @@ mysqli_data_seek($detail, 0);
             <p style="font-size: 10px;">ditukarkan/dikembalikan. Kecuali ada perjanjian lebih</p>
             <p style="font-size: 10px;">dahulu</p>
         </div>
-        <div style="text-align: center; border: 1px solid black; margin-top: 3px; font-weight: bold;">
+        <div style="text-align: left; border: 1px solid black; margin-top: 3px; font-weight: bold;">
             <p style="font-size: 10px;">Komplin / Keluhan Pelanggan:</p>
             <p style="font-size: 10px;">Whatsapp: 08113560100</p>
             <p style="font-size: 10px;">(Foto Struk+Barang)</p>
